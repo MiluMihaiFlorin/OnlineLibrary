@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .carousel-item{
+        height: auto;
+        background: black;
+        color: white;             
+        border-radius: 50px;
+    }
+    .carousel-item-container{
+        position: absolute;
+        bottom:0;        
+        left: 250px;
+        right:0;
+        padding-bottom: 50px;         
+        
+    }
+    .carousel-image{
+        opacity:0.65;              
+        object-fit:cover;
+        border-radius:50px;        
+        top:0;
+        left:0;                
+        object-position:100% 0;        
+    }
+
+    .add-top-padding{
+        padding-top: 50px;
+    }
+
+    .form-style{
+        border:thin;
+        border-color:aqua;        
+    }
+    a{
+        text-decoration:none;
+    }
+</style>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li  data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
+            <li  data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></li>
+        </ol>
+        <div class="carousel-inner rounded-6">
+            <div class="carousel-item active">
+            <img src="~/Data/Img/library.jpg" class="d-block w-100  d-inline-block carousel-image" alt="...">
+                <div class="carousel-item-container">
+                    <h1><b>Welcome to our website!</b></h1>
+                    <h2>We will help you find the book you look for</h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Data/Img/news.jpg" class="d-block w-100 mh-25 carousel-image" alt="...">
+                <div class="carousel-item-container">
+                    <h1>Read our news section!</h1>
+                    <h2>Find the latest anouncements</h2>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+<section id="login">
+     <div class="container-lg add-top-padding">
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                <div class="text-center">
+                    <h2>LOGIN FORM</h2>
+                    <p class="lead">Input your login cridentials</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-5">
+
+                <div class="col-lg-6">
+                    <form class="form-style">
+                        <label for="email" class="form-label">Email address:</label>
+                        <input type="email" class="form-control" id="email" placeholder="e.g.mario@example.com">
+
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="username">
+
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="text" class="form-control" id="password">
+
+                        <label for="Forgot password" class="form-label remove-underlined-link"><a href="">Forgot Passoword</a></label>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Keep me logged in
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-4 text-center add-top-padding">
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
