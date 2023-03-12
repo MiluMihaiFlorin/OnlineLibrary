@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Admin Categories";
+}
+<h1 style="padding:30px; color:gray">
+    <b>Manage Categories</b>
+</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Update Date</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Romantic</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>2015-05-07 00:05:25</td>
+            <td>2015-05-07 00:05:25</td>
+            <td>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-edit gap-1" style="color:white"></i> Edit</button>
+                    <button class="btn btn-danger" type="button"> <i class="fa fa-eraser gap-1" style="color:white"></i> Delete</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Scientific</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>2015-05-07 00:05:25</td>
+            <td>2015-05-07 00:05:25</td>
+            <td>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-edit gap-1" style="color:white"></i> Edit</button>
+                    <button class="btn btn-danger" type="button"> <i class="fa fa-eraser gap-1" style="color:white"></i> Delete</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Action</td>
+            <td><span class="badge bg-danger">Inactive</span></td>
+            <td>2015-05-07 00:05:25</td>
+            <td>2015-05-07 00:05:25</td>
+            <td>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-edit gap-1" style="color:white"></i> Edit</button>
+                    <button class="btn btn-danger" type="button"> <i class="fa fa-eraser gap-1" style="color:white"></i> Delete</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">4</th>
+            <td>Sci-Fi</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>2015-05-07 00:05:25</td>
+            <td>2015-05-07 00:05:25</td>
+            <td>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-edit gap-1" style="color:white"></i> Edit</button>
+                    <button class="btn btn-danger" type="button"> <i class="fa fa-eraser gap-1" style="color:white"></i> Delete</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">2</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </tfoot>
+</table>

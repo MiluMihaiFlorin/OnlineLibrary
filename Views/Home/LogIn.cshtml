@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "LogIn";
+}
+<style>
+    .add-top-padding {
+        padding-top: 50px;
+    }
+
+
+    .carousel-item {
+        background: black;
+        color: white;
+        border-radius: 50px;
+    }
+
+    .carousel-image {
+        opacity: 0.65;
+        border-radius: 50px;
+        top: 0;
+        left: 0;
+        width: 900px;
+        height: 200px;
+    }
+
+</style>
+<section id="login">
+        <div id="myCarousel" class="carousel slide  mx-auto" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
+                <li data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></li>
+            </ol>
+            <div class="carousel-inner rounded-6">
+                <div class="carousel-item active">
+                    <img src="~/Data/Img/library.jpg" class="d-block w-100 d-inline-block carousel-image" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3><b>Welcome to our website!</b></h3>
+                        <h4>We will help you find the book you look for</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Data/Img/news.jpg" class="d-block w-100  carousel-image" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Read our news section!</h3>
+                        <h4>Find the latest anouncements</h4>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    <div class="container-lg align-center" style="padding-top:50px">
+        <div class="card align-center">
+            <div class="card-header">
+                <div class="text-center pt-3">
+                    <h2>Login</h2>
+                    <p class="lead">Input your login cridentials</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-5">
+
+                <div class="col-lg-4 bh bg-white m-auto" style="padding-top:25px">
+                    <!-- Form star -->
+                    <form action="#">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            <input type="text" class="form-control" placeholder="Email" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                            <input type="text" class="form-control" placeholder="Password" />
+                        </div>
+                        <p><a href="#">Forgot Password?</a></p>
+                    </form>
+
+                </div>
+
+                <div class="mb-4 text-center add-top-padding">
+                    <a asp-area="" asp-controller="AdminLoggedIn" asp-action="Dashbord"><button type="submit" class="btn btn-primary"> Log In</button></a>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

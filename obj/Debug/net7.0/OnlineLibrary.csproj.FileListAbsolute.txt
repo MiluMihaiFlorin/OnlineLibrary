@@ -64,7 +64,6 @@ E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\staticwebassets\msbuild.buildTra
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\staticwebassets.pack.json
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\staticwebassets.build.json
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\staticwebassets.development.json
-E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\scopedcss\bundle\OnlineLibrary.styles.css
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\scopedcss\projectbundle\OnlineLibrary.bundle.scp.css
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\OnlineLibrary.csproj.CopyComplete
@@ -73,3 +72,4 @@ E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\refint\OnlineLibrary.dll
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\OnlineLibrary.pdb
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\OnlineLibrary.genruntimeconfig.cache
 E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\ref\OnlineLibrary.dll
+E:\Facultate\WAD\OnlineLibrary\obj\Debug\net7.0\scopedcss\Views\Home\_Layout.cshtml.rz.scp.css
