@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\Facultate\WAD\OnlineLibrary
 build_property._RazorSourceGeneratorDebug = 
 
+[E:/Facultate/WAD/OnlineLibrary/Views/AdminLoggedIn/AddCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5Mb2dnZWRJblxBZGRDYXRlZ29yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Facultate/WAD/OnlineLibrary/Views/AdminLoggedIn/Authors.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5Mb2dnZWRJblxBdXRob3JzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

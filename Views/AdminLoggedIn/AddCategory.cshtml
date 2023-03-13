@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    ViewData["Title"] = "Adimn Add Category";
+}
+
+<body class="bg-light">
+    <div class="container-md " style="padding-top:50px">
+        <div class="card mx-auto" style="width: 70%">
+            <div class="card-header">
+                <div class="text-center">
+                    <h2 class="text-center pt-3">Category info</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-4 bh bg-white m-auto" style="padding-top:25px">
+                    <!-- Form star -->                    
+                    <form action="#">
+                        <p class="card-text">Category Name</p>
+                        <div class="input-group mb-3">                            
+                            <input type="text" class="form-control" placeholder="" />
+                            <span class="input-group-text"><i class="fa fa-bars"></i></span>
+                        </div>
+                        <p class="card-text">Status</p>
+                        <div class="form-check" style="margin-bottom: 20px">
+                            <input class="form-check-input" type ="radio" name ="Radio1" value = "option1" id="Radio1" checked>
+                            <label class="form-check-label" for="Radio1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check" style="margin-bottom: 30px">
+                            <input class="form-check-input" type="radio" name="Radio1" value="option1" id="Radio2" checked>
+                            <label class="form-check-label" for="Radio2">
+                                Inactive
+                            </label>
+                        </div>
+                        <div class="card-text">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SignUpModal">Create</button>
+                        </div>                            
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Category registered successfully!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

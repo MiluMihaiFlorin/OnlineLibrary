@@ -20,6 +20,10 @@ namespace OnlineLibrary.Controllers
         {
             return View();
         }
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
 
         public IActionResult Authors()
         {
