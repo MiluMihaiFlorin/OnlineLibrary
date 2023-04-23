@@ -27,7 +27,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Books/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Books == null)
             {
@@ -59,6 +59,7 @@ namespace OnlineLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                book.BookId = Guid.NewGuid();
                 _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,7 +68,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Books/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Books == null)
             {
@@ -87,7 +88,7 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookId,Title,Publisher,PublishYear,ISBN,Quantity")] Book book)
+        public async Task<IActionResult> Edit(Guid id, [Bind("BookId,Title,Publisher,PublishYear,ISBN,Quantity")] Book book)
         {
             if (id != book.BookId)
             {
@@ -118,7 +119,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Books/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Books == null)
             {
@@ -138,7 +139,7 @@ namespace OnlineLibrary.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Books == null)
             {
@@ -154,7 +155,7 @@ namespace OnlineLibrary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool BookExists(Guid id)
         {
           return (_context.Books?.Any(e => e.BookId == id)).GetValueOrDefault();
         }

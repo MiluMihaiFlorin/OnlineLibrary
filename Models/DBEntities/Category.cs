@@ -5,12 +5,7 @@ namespace OnlineLibrary.Models.DBEntities
     public class Category
     {
 
-        public Category()
-        {
-            this.Books = new HashSet<Book>();
-        }
-
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
         [Required]
         public string? Name { get; set; }

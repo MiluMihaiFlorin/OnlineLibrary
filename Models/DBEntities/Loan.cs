@@ -4,15 +4,9 @@ namespace OnlineLibrary.Models.DBEntities
 {
     public class Loan
     {
-        public Loan()
-        {
-            this.Books = new HashSet<Book>();
-            this.User = new User(); 
-        }
+        public Guid LoanId { get; set; }
 
-        public int LoanId { get; set; }
-
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         
 
         [Required]

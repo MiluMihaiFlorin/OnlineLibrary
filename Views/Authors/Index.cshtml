@@ -33,12 +33,9 @@
                 <th scope="row">@Html.DisplayFor(modelItem => item.AuthorId)</th>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
-                    <div class="d-grid gap-2 d-md-block">
-                        <a asp-action="Edit" asp-route-id="@item.AuthorId"><input class="btn btn-primary" type="submit" value="Edit"> </a>
-                        <a asp-action="Details" asp-route-id="@item.AuthorId"><input class="btn btn-secondary" type="submit" value="Details"> </a>
-                        <a asp-action="Delete" asp-route-id="@item.AuthorId"><input class="btn btn-danger" type="submit" value="Delete"> </a>
-                        
-                    </div>
+                    <a asp-action="Details" asp-route-id="@item.AuthorId" class="btn btn-primary fa fa-circle-info" type="button"></a>
+                    <a asp-action="Edit" asp-route-id="@item.AuthorId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                    <a asp-action="Delete" asp-route-id="@item.AuthorId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
                 </td>
             </tr>
         }

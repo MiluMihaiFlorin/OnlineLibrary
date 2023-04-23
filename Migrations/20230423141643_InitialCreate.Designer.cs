@@ -12,7 +12,7 @@ using OnlineLibrary.Models.DBEntities;
 namespace OnlineLibrary.Migrations
 {
     [DbContext(typeof(OnlineLibraryContext))]
-    [Migration("20230422203511_InitialCreate")]
+    [Migration("20230423141643_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("AuthorBook", b =>
                 {
-                    b.Property<int>("AuthorsAuthorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AuthorsAuthorId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BooksBookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BooksBookId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AuthorsAuthorId", "BooksBookId");
 
@@ -42,11 +42,11 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("BookCategory", b =>
                 {
-                    b.Property<int>("BooksBookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BooksBookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CategoriesCategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoriesCategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BooksBookId", "CategoriesCategoryId");
 
@@ -57,11 +57,11 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("BookLoan", b =>
                 {
-                    b.Property<int>("BooksBookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BooksBookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LoansLoanId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LoansLoanId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BooksBookId", "LoansLoanId");
 
@@ -72,11 +72,9 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Author", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<Guid>("AuthorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -84,16 +82,14 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Book", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<Guid>("BookId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
@@ -121,11 +117,9 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -136,16 +130,14 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Loan", b =>
                 {
-                    b.Property<int>("LoanId")
+                    b.Property<Guid>("LoanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LoanDate")
                         .HasColumnType("datetime2");
@@ -153,8 +145,8 @@ namespace OnlineLibrary.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoanId");
 
@@ -165,11 +157,9 @@ namespace OnlineLibrary.Migrations
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");

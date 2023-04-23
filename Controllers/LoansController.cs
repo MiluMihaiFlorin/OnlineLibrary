@@ -26,7 +26,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Loans/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Loans == null)
             {
@@ -60,6 +60,7 @@ namespace OnlineLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                loan.LoanId = Guid.NewGuid();
                 _context.Add(loan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,7 +70,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Loans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Loans == null)
             {
@@ -90,7 +91,7 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("LoanId,UserId,LoanDate,ReturnDate")] Loan loan)
+        public async Task<IActionResult> Edit(Guid id, [Bind("LoanId,UserId,LoanDate,ReturnDate")] Loan loan)
         {
             if (id != loan.LoanId)
             {
@@ -122,7 +123,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Loans/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Loans == null)
             {
@@ -143,7 +144,7 @@ namespace OnlineLibrary.Controllers
         // POST: Loans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             if (_context.Loans == null)
             {
@@ -159,7 +160,7 @@ namespace OnlineLibrary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LoanExists(int id)
+        private bool LoanExists(Guid id)
         {
           return (_context.Loans?.Any(e => e.LoanId == id)).GetValueOrDefault();
         }

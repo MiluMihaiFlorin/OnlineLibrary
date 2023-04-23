@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.User.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.LoanId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.LoanId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.LoanId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.LoanId" class="btn btn-primary fa fa-circle-info" type="button"></a>
+                <a asp-action="Edit" asp-route-id="@item.LoanId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                <a asp-action="Delete" asp-route-id="@item.LoanId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
             </td>
         </tr>
 }

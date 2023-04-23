@@ -11,11 +11,11 @@ namespace OnlineLibrary.Models.DBEntities
 
         public DbSet<OnlineLibrary.Models.DBEntities.Book>? Books { get; set; }  
 
-        public DbSet<OnlineLibrary.Models.DBEntities.Author>? Author { get; set; }   
+        public DbSet<OnlineLibrary.Models.DBEntities.Author>? Authors { get; set; }   
 
         public DbSet<OnlineLibrary.Models.DBEntities.Loan>? Loans { get; set; }  
 
-        public DbSet<OnlineLibrary.Models.DBEntities.Category> Category { get; set; } = default!;
+        public DbSet<OnlineLibrary.Models.DBEntities.Category> Categories { get; set; } = default!;
         
     }
 }

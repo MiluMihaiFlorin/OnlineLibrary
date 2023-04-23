@@ -6,6 +6,26 @@
 
 @section Scripts{
     <script type="text/javascript">
+        function populateTable(){
+            var dataToSend = {
+                statusType: $("#statusTypeSelect").val()
+            };
+
+            $.ajax({
+                url: "Categories/GetCategoryByType",
+                type: "GET",
+                data: dataToSend,
+                success: function (categoriesResponse){
+                    $("#categoryTable").empty();
+                    categoriesResponse.forEach(function(element)){
+                        $("#categoryTable").append()
+                    }
+
+                },
+
+
+            })
+        }
     </script>
 }
 
@@ -15,14 +35,30 @@
 <div class="container" style="padding:20px">
     <div class="row">
         <div class="col-sm-3.ml-md-auto">
-            <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search" />
-            </div>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    @Html.TextBox("SearchString")
+                    <input type="submit" value="Search"/>
+                </p>
+            }
         </div>
     </div>
+    <div class="row align-items-end">
+        <div class="col-sm-2 ">
+            <label>Status</label>
+            <label class="select">
+                <select id="statusTypeSelect">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="all">All</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
 </div>
-<table class="table table-striped">
+<table class="table table-striped" id="categoryTable">
     <thead>
         <tr>
 
@@ -36,7 +72,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th scope="row">@Html.DisplayFor(modelItem => item.CategoryId)</th>
+                <th></th>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
                     @if (item.IsActive == true)
@@ -50,11 +86,9 @@
 
                 </td>
                 <td>
-                    <div class="d-grid gap-2 d-md-block">
-                        <a asp-action="Edit" asp-route-id="@item.CategoryId"><input class="btn btn-primary" type="submit" value="Edit"> </a>
-                        <a asp-action="Details" asp-route-id="@item.CategoryId"><input class="btn btn-secondary" type="submit" value="Details"> </a>
-                        <a asp-action="Delete" asp-route-id="@item.CategoryId"><input class="btn btn-danger" type="submit" value="Delete"> </a>                        
-                    </div>
+                    <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-primary fa fa-circle-info" type="button"></a>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-success fa fa-pencil-square" type="button" ></a>
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
                 </td>
             </tr>
         }

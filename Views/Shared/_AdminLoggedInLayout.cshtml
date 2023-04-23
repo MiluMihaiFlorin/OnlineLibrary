@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineLibrary.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />    
 </head>
 <body>
     <header>
@@ -103,13 +103,12 @@
                 </div>
             </nav>
     </header>
-    <div class="container" >
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container" style="position:relative">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
     </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="position:absolute; height:2.5rem; bottom: 0; width:100%">
         <div class="container">
             &copy; 2023 - OnlineLibrary - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
@@ -119,4 +118,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

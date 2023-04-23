@@ -31,6 +31,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Authors\Create.cshtml" />
+    <None Include="Views\Authors\Delete.cshtml" />
+    <None Include="Views\Authors\Details.cshtml" />
+    <None Include="Views\Authors\Edit.cshtml" />
+    <None Include="Views\Authors\Index.cshtml" />
+    <None Include="Views\Authors\_ViewStart.cshtml" />
+    <None Include="Views\Books\Create.cshtml" />
+    <None Include="Views\Books\Delete.cshtml" />
+    <None Include="Views\Books\Details.cshtml" />
+    <None Include="Views\Books\Edit.cshtml" />
+    <None Include="Views\Books\Index.cshtml" />
+    <None Include="Views\Books\_ViewStart.cshtml" />
+    <None Include="Views\Categories\Create.cshtml" />
+    <None Include="Views\Categories\Delete.cshtml" />
+    <None Include="Views\Categories\Details.cshtml" />
+    <None Include="Views\Categories\Edit.cshtml" />
+    <None Include="Views\Categories\Index.cshtml" />
+    <None Include="Views\Categories\_ViewStart.cshtml" />
+    <None Include="Views\Loans\Create.cshtml" />
+    <None Include="Views\Loans\Delete.cshtml" />
+    <None Include="Views\Loans\Details.cshtml" />
+    <None Include="Views\Loans\Edit.cshtml" />
+    <None Include="Views\Loans\Index.cshtml" />
+    <None Include="Views\Loans\_ViewStart.cshtml" />
+    <None Include="Views\Users\Create.cshtml" />
+    <None Include="Views\Users\Delete.cshtml" />
+    <None Include="Views\Users\Details.cshtml" />
+    <None Include="Views\Users\Edit.cshtml" />
+    <None Include="Views\Users\Index.cshtml" />
     <None Include="wwwroot\Data\Img\news.jpg" />
   </ItemGroup>
 

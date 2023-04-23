@@ -5,12 +5,7 @@ namespace OnlineLibrary.Models.DBEntities
     public class Author
     {       
             
-        public Author()
-        {
-            this.Books = new HashSet<Book>();
-        }
-
-        public int AuthorId { get; set; }
+        public Guid AuthorId { get; set; }
 
         [Required]
         public string? Name { get; set; }

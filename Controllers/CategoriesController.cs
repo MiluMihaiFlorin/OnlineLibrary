@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Controllers
 {
@@ -13,28 +14,37 @@ namespace OnlineLibrary.Controllers
     {
         private readonly OnlineLibraryContext _context;
 
-        public CategoriesController(OnlineLibraryContext context)
+        private ICategoryService _categoryService;
+
+        public CategoriesController(OnlineLibraryContext context, ICategoryService categoryService)
         {
             _context = context;
+            _categoryService = categoryService;
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Category != null ? 
-                          View(await _context.Category.ToListAsync()) :
-                          Problem("Entity set 'OnlineLibraryContext.Category'  is null.");
+            var data = _categoryService.GetAll();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = _categoryService.GetBySearchCondition(searchString);
+            }
+            
+            return _categoryService.GetAll() != null ? 
+                          View(data) :
+                          Problem("Entity set 'OnlineLibraryContext.Categories'  is null.");
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
@@ -59,6 +69,7 @@ namespace OnlineLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.CategoryId = Guid.NewGuid();
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,14 +78,14 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -87,7 +98,7 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Name,IsActive")] Category category)
+        public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,Name,IsActive")] Category category)
         {
             if (id != category.CategoryId)
             {
@@ -118,14 +129,14 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
@@ -138,25 +149,32 @@ namespace OnlineLibrary.Controllers
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Category == null)
+            if (_context.Categories == null)
             {
-                return Problem("Entity set 'OnlineLibraryContext.Category'  is null.");
+                return Problem("Entity set 'OnlineLibraryContext.Categories'  is null.");
             }
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
-                _context.Category.Remove(category);
+                _context.Categories.Remove(category);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool CategoryExists(Guid id)
         {
-          return (_context.Category?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+          return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+        }
+
+        [HttpGet]
+        public IActionResult GetCategoriesWithStatus(string statusType)
+        {
+            var categories = _categoryService.GetCategoryByType(statusType);
+            return View(categories);
         }
     }
 }
