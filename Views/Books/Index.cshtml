@@ -1,0 +1,79 @@
+﻿@model IEnumerable<OnlineLibrary.Models.DBEntities.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1 style="padding:30px; color:dimgray">
+    Manage Books
+</h1>
+<div class="container" style="padding:20px">
+    <div class="row">
+        <div class="col-sm-3.ml-md-auto">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search" />
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col">Title</th>
+            <th scope="col">Publiser</th>
+            <th scope="col">PublishYear</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                <div class="d-grid gap-2 d-md-block">
+                        
+                        <a asp-action="Edit" asp-route-id="@item.BookId"><input class="btn btn-primary" type="submit" value="Edit"> </a>
+                        <a asp-action="Details" asp-route-id="@item.BookId"><input class="btn btn-secondary" type="submit" value="Details"> </a>
+                        <a asp-action="Delete" asp-route-id="@item.BookId"><input class="btn btn-danger" type="submit" value="Delete"> </a>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+<nav>
+    <ul class="pagination justify-content-end">
+        <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">2</span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>

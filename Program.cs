@@ -1,7 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Repositories;
+using OnlineLibrary.Repositories.Interfaces;
+using OnlineLibrary.Services;
+using OnlineLibrary.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<OnlineLibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLibraryDb")));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
 var app = builder.Build();
 

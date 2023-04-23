@@ -1,4 +1,4 @@
-namespace OnlineLibrary.Models
+namespace OnlineLibrary.Models.DBEntities
 {
     public class ErrorViewModel
     {

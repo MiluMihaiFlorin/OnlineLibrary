@@ -1,0 +1,68 @@
+﻿@model OnlineLibrary.Models.DBEntities.Category
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body class="bg-light">
+    <div class="container-md " style="padding-top:50px">
+        <div class="card mx-auto" style="width: 70%">
+            <div class="card-header">
+                <div class="text-center">
+                    <h2 class="text-center pt-3">Create Category</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-4 bh bg-white m-auto" style="padding-top:25px">
+                    <!-- Form star -->
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <p class="card-text">Category Name</p>
+                        <div class="form-group">
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger" class="input-group-text"></span>
+                        </div>
+                        <p class="card-text">Status</p>
+                        <div class="form-check" style="margin-bottom: 20px">
+                            <label>
+                                <input type="radio" asp-for="IsActive" value="false" />
+                                Inactive
+                            </label>
+                        </div>
+                        <div class="form-check" style="margin-bottom: 30px">
+                            <label>
+                                <input type="radio" asp-for="IsActive" value="true" />
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Category registered successfully!
+                </div>
+                <div class="modal-footer">
+                    <button asp-action="Index" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

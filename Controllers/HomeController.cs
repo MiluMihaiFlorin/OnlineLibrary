@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.Models.DBEntities;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 
 namespace OnlineLibrary.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+      
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -18,12 +21,10 @@ namespace OnlineLibrary.Controllers
             return View();
         }
 
-
         public IActionResult LogIn()
         {
             return View();
         }
-
         public IActionResult SignUp()
         {
             return View();
@@ -44,3 +45,4 @@ namespace OnlineLibrary.Controllers
         }
     }
 }
+
