@@ -14,15 +14,15 @@ namespace OnlineLibrary.Services
         {
             var categories = new List<Category>();
 
-            if(categoryType == "Active")
+            if(categoryType == "active")
             {
                 categories = _repositoryWrapper.CategoryRepository.FindByCondition(l => l.IsActive == true).ToList();
             }
-            else if(categoryType == "Inactive")
+            else if(categoryType == "inactive")
             {
                 categories= _repositoryWrapper.CategoryRepository.FindByCondition(l => l.IsActive == false).ToList();
             }
-            else if(categoryType == "All")
+            else if(categoryType == "all")
             {
                 categories = (List<Category>)_repositoryWrapper.CategoryRepository.FindAll();
             }

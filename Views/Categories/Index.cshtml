@@ -8,25 +8,57 @@
     <script type="text/javascript">
         function populateTable(){
             var dataToSend = {
-                statusType: $("#statusTypeSelect").val()
+                locationType: $("#statusTypeSelect").val()
             };
 
             $.ajax({
-                url: "Categories/GetCategoryByType",
+                url: "/Categories/GetCategoriesWithStatus",
                 type: "GET",
                 data: dataToSend,
-                success: function (categoriesResponse){
-                    $("#categoryTable").empty();
-                    categoriesResponse.forEach(function(element)){
-                        $("#categoryTable").append()
+                success: function (categoriesResponse) {
+                    $("#categoryTableContent").empty();
+                    categoriesResponse.forEach(function(element))
+                    {   if(element.IsActive == true)
+                        {
+                            $('#categoryTableContent').append(
+                                  "<tr>"
+                                +   "<td>" + element.Name + "</td>"
+                                +   "<td>" + "<span class=\"badge bg-success\" > Active < /span>" + "</td > "
+                                +   "<td>" 
+                                +       " <a asp - action=\"Details\" asp - route - id=\""+element.CategoryId+"\" class= \"btn btn-primary fa fa-circle-info\" type = \"button\" > </a>
+                                +       " <a asp - action=\"Edit\" asp - route - id=\"" + element.CategoryId + "\" class= \"btn btn-success fa fa-pencil-square\" type = \"button\" > </a>
+                                + " <a asp - action=\"Details\" asp - route - id=\"" + element.CategoryId + "\" class= \"btn btn-danger fa fa-trash-alt\" type = \"button\" > </a>"
+                                +   "</td>"
+                                +"</tr>"
+                                )
+                        }
+                        if else (element.IsActive == false)
+                        {
+                            $('#categoryTableContent').append(
+                                "<tr>"
+                                + "<td>" + element.Name + "</td>"
+                                + "<td>" + "<span class=\"badge bg-danger\" > Inactive < /span>" + "</td > "
+                                + "<td>"
+                                + " <a asp - action=\"Details\" asp - route - id=\"" + element.CategoryId + "\" class= \"btn btn-primary fa fa-circle-info\" type = \"button\" > </a>
+                                + " <a asp - action=\"Edit\" asp - route - id=\"" + element.CategoryId + "\" class= \"btn btn-success fa fa-pencil-square\" type = \"button\" > </a>
+                                + " <a asp - action=\"Details\" asp - route - id=\"" + element.CategoryId + "\" class= \"btn btn-danger fa fa-trash-alt\" type = \"button\" > </a>"
+                                + "</td>"
+                                + "</tr>"
+                            )
+                        }
                     }
-
                 },
-
-
-            })
+                error: function () {
+                    alert("Error while choosing a status!")
+                }
+            });
         }
+
+        $("#locationTypeSelect").on('change', populateTable);
+        populateTable();
+
     </script>
+
 }
 
 <h1 style="padding:30px; color:dimgray">
@@ -58,7 +90,7 @@
     </div>
 
 </div>
-<table class="table table-striped" id="categoryTable">
+<table class="table table-striped">
     <thead>
         <tr>
 
@@ -68,11 +100,10 @@
             <th scope="col">Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="categoryTableContent">
         @foreach (var item in Model)
         {
             <tr>
-                <th></th>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
                     @if (item.IsActive == true)
