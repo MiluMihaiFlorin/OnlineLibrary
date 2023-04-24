@@ -37,12 +37,14 @@
         </tr>
     </thead>
     <tbody >
+        @{
+            int i = 0;
+        }
         @foreach (var item in Model)
         {
-            var counter = 0 ;
-            counter++;
+            i++;
             <tr>
-                <td>@Html.DisplayFor(modelItem => counter)</td>
+                <td>@Html.DisplayFor(modelItem => @i + @pager.PageSize )</td>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
                     @if (item.IsActive == true)

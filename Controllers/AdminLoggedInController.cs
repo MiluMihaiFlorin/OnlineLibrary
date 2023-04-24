@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Services.Interfaces;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 
@@ -10,9 +11,12 @@ namespace OnlineLibrary.Controllers
 	{
 		private readonly ILogger<AdminLoggedInController> _logger;
 
-		public AdminLoggedInController(ILogger<AdminLoggedInController> logger)
+        ICategoryService _categoryService;
+
+		public AdminLoggedInController(ILogger<AdminLoggedInController> logger, ICategoryService categoryService)
 		{
 			_logger = logger;
+			_categoryService = categoryService;
 		}
 
 		public IActionResult Dashbord()
