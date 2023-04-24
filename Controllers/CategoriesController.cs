@@ -23,13 +23,19 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString = "",int pg= 1, int pageSize = 5)
         {
-            var data = _categoryService.GetAll();
+            List<Category> data = _categoryService.GetAll();
             if (!String.IsNullOrEmpty(searchString))
             {
                 data = _categoryService.GetBySearchCondition(searchString);
             }
+
+            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
+
+            this.ViewBag.Pager = pager;
+
+            data = data.Skip((pg - 1)*pageSize).Take(pageSize).ToList();
             
             return _categoryService.GetAll() != null ? 
                           View(data) :

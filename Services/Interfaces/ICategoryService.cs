@@ -8,5 +8,7 @@ namespace OnlineLibrary.Services.Interfaces
         public List<Category> GetAll();
 
         public List<Category> GetBySearchCondition(string searchString);
+
+        
     }
 }
