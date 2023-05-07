@@ -1,28 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Services;
+using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Controllers
 {
     public class AuthorsController : Controller
     {
         private readonly OnlineLibraryContext _context;
+        private IAuthorService _authorService;
 
-        public AuthorsController(OnlineLibraryContext context)
+        public AuthorsController(OnlineLibraryContext context, IAuthorService authorService)
         {
             _context = context;
+            _authorService = authorService;
         }
 
         // GET: Authors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-              return _context.Authors != null ? 
-                          View(await _context.Authors.ToListAsync()) :
+            List<Author> data = _authorService.GetAll();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = _authorService.GetBySearchCondition(searchString);
+            }
+
+            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
+            this.ViewBag.Pager = pager;
+            data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
+
+            return _authorService.GetAll() != null ?
+                          View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Authors'  is null.");
         }
 

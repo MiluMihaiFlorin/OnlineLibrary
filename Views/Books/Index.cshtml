@@ -2,26 +2,31 @@
 
 @{
     ViewData["Title"] = "Index";
+    Pager pager = ViewBag.Pager;
+    int i = 0, rownumber = 0;
 }
+
 <h1 style="padding:30px; color:dimgray">
     Manage Books
 </h1>
-<div class="container" style="padding:20px">
-    <div class="row">
-        <div class="col-sm-3.ml-md-auto">
-            <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search" />
-            </div>
-        </div>
-    </div>
+<div class="d-flex justify-content-start">
+    <form asp-action="index">
+        <span class="btn-group">
+            <input class="form-control" type="text"
+                   name="searchString"
+                   value="@ViewBag.searchString"
+                   placeholder="Search Key" />
+            <input class="p-1 ml-2 btn btn-sm btn-primary" style="border-radius:10px;" type="submit" value="Search" />
+        </span>
+    </form>
 </div>
 <table class="table table-striped">
     <thead>
         <tr>
 
+            <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Publiser</th>
+            <th scope="col">Publisher</th>
             <th scope="col">PublishYear</th>
             <th scope="col">ISBN</th>
             <th scope="col">Quantity</th>
@@ -29,48 +34,32 @@
         </tr>
     </thead>
     <tbody>
-
-
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-primary fa fa-circle-info" type="button"></a>
-                <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-success fa fa-pencil-square" type="button"></a>
-                <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            i++;
+            rownumber = pager.PageSize * (pager.CurrentPage - 1) + i;
+            <tr>
+                <th scope="row">@Html.DisplayFor(modelItem => rownumber)</th>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Publisher)</td>
+                <td>@Html.DisplayFor(modelItem => item.PublishYear)</td>
+                <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-primary fa fa-circle-info" type="button"></a>
+                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                    <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                </td>
+            </tr>
         }
     </tbody>
     <tfoot>
     </tfoot>
 </table>
 <nav>
-    <ul class="pagination justify-content-end">
-        <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-            <span class="page-link">2</span>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_paginationBar" model="@pager" />
+        </div>
+    </div>
 </nav>

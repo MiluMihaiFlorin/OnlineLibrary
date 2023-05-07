@@ -1,6 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";    
+
 }
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <head>
     
 </head>
@@ -20,8 +26,15 @@
     <div class="text-center" style="padding:10px">
         <h2 style="font-family:Arial, Helvetica, sans-serif; font-palette:dark"><b>Welcome</b></h2>
         <p style="font-family:Arial, Helvetica, sans-serif">Take a tour in our virtual library!</p>
-        <a href="Home/LogIn" class="btn btn-primary " style="width: 250px ;font-family:Arial, Helvetica, sans-serif; font-palette:dark">Log In</a>
-        <a href="Home/SignUp" class="btn btn-primary" button-item" style="width: 250px ; font-family:Arial, Helvetica, sans-serif; font-palette:dark">Sign Up</a>
+        @if(SignInManager.IsSignedIn(User))
+        {
+            
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary " style="width: 250px ;font-family:Arial, Helvetica, sans-serif; font-palette:dark">Log In</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary" button-item" style="width: 250px ; font-family:Arial, Helvetica, sans-serif; font-palette:dark">Register</a>
+        }
     </div>
 </body>
  

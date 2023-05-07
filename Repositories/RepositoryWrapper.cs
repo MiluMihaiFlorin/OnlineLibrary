@@ -7,6 +7,8 @@ namespace OnlineLibrary.Repositories
     {
         private OnlineLibraryContext _OnlineLibraryContext;
         private ICategoryRepository? _CategoryRepository;
+        private IAuthorRepository? _AuthorRepository;
+        private IBookRepository? _BookRepository;
 
         public ICategoryRepository CategoryRepository 
         {
@@ -21,7 +23,36 @@ namespace OnlineLibrary.Repositories
             }
         
         }
-       
+
+        public IAuthorRepository AuthorRepository
+        {
+            get
+            {
+                if (_AuthorRepository == null)
+                {
+                    _AuthorRepository = new AuthorRepository(_OnlineLibraryContext);
+                }
+
+                return _AuthorRepository;
+            }
+
+        }
+
+        public IBookRepository BookRepository
+        {
+            get
+            {
+                if (_BookRepository == null)
+                {
+                    _BookRepository = new BookRepository(_OnlineLibraryContext);
+                }
+
+                return _BookRepository;
+            }
+
+        }
+
+
         public RepositoryWrapper(OnlineLibraryContext onlineLibraryContext)
         {
             _OnlineLibraryContext = onlineLibraryContext;

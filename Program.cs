@@ -4,16 +4,47 @@ using OnlineLibrary.Repositories;
 using OnlineLibrary.Repositories.Interfaces;
 using OnlineLibrary.Services;
 using OnlineLibrary.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>().AddEntityFrameworkStores<OnlineLibraryContext>();
 builder.Services.AddDbContext<OnlineLibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLibraryDb")));
+
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();  
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+
+{
+    //Passowrd settings
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredUniqueChars = 6;
+
+    //Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    //User settings
+    options.User.RequireUniqueEmail = true;
+
+}
+);
 
 var app = builder.Build();
 
@@ -29,11 +60,49 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "Admin", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    string email = "admin@admin.com";
+    string password = "Admin123456!";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var adminUser = new IdentityUser
+        {
+            UserName = email,
+            Email = email
+        };
+        await userManager.CreateAsync(adminUser, password);
+
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
+
 
 app.Run();

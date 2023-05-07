@@ -15,7 +15,6 @@ namespace OnlineLibrary.Models.DBEntities
         public DateTime? ReturnDate { get; set; }
 
         public ICollection<Book>? Books{ get; set; }
-
-        public User? User { get; set; }
+        
     }
 }

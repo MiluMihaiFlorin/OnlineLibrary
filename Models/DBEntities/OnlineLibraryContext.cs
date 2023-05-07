@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
 
 namespace OnlineLibrary.Models.DBEntities
 {
-    public class OnlineLibraryContext:DbContext
+    public class OnlineLibraryContext: IdentityDbContext<IdentityUser>
     {
         public OnlineLibraryContext(DbContextOptions<OnlineLibrary.Models.DBEntities.OnlineLibraryContext> options) :base(options) { }
-
-        public DbSet<OnlineLibrary.Models.DBEntities.User>? Users { get; set; }
+        
 
         public DbSet<OnlineLibrary.Models.DBEntities.Book>? Books { get; set; }  
 

@@ -4,6 +4,9 @@
     {
         ICategoryRepository CategoryRepository { get; }
 
+        IAuthorRepository AuthorRepository { get; } 
+
+        IBookRepository BookRepository { get; }
         void Save();
     }
 }

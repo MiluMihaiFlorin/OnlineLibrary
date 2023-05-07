@@ -40,6 +40,10 @@ namespace OnlineLibrary.Services
             var result = _repositoryWrapper.CategoryRepository.FindByCondition(s => s.Name == searchString).ToList();
             return result;
         }
-        
+        public int GetNumberOfListedCategories()
+        {
+            var result = _repositoryWrapper.CategoryRepository.FindAll().Count();
+            return result;
+        }
     }
 }

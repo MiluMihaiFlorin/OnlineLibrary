@@ -6,23 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Services;
+using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Controllers
 {
     public class BooksController : Controller
     {
         private readonly OnlineLibraryContext _context;
+        private readonly IBookService _bookService;
 
-        public BooksController(OnlineLibraryContext context)
+        public BooksController(OnlineLibraryContext context, IBookService bookService)
         {
             _context = context;
+            _bookService = bookService;
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-              return _context.Books != null ? 
-                          View(await _context.Books.ToListAsync()) :
+            List<Book> data = _bookService.GetAll();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = _bookService.GetBySearchCondition(searchString);
+            }
+
+            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
+            this.ViewBag.Pager = pager;
+            data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
+
+            return _bookService.GetAll() != null ?
+                          View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Books'  is null.");
         }
 

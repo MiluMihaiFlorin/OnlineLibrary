@@ -1,4 +1,10 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -48,6 +54,9 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end align-center">
                         <ul class="navbar-nav">
                             <li class="nav-item">
+                                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="AdminLoggedIn" asp-action="Dashbord">Dashboard</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -56,7 +65,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Create">Add Category</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Manage Categories</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Manage Categories</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -65,7 +74,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Create">Add Authors</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Index">Manage Authors</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Authors" asp-action="Index">Manage Authors</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -73,30 +82,32 @@
                                     Books
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Add Books</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Manage Books</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Add Books</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Manage Books</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Loans
                                 </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Create">Issue Books</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Index">View Issued Books</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Create">Issue Book</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Index">Manage Loans</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Users
                                 </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Create">Register Users</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Manage Users</a>
                                 </div>
                             </li>
-                            <li>
-                                <a asp-area="" asp-controller="Home" asp-action="Index"><button class="btn btn-danger my-2 my-sm-0" type="submit">Log Out</button></a>
+                            <li class="nav-item">
+                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button id="logout" type="submit" class="nav-link btn-danger my-2 my-sm-0">Logout</button>
+                                </form>
                             </li>
                         </ul>
                     </div>

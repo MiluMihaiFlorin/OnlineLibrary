@@ -49,22 +49,13 @@
     <None Include="Views\Categories\Edit.cshtml" />
     <None Include="Views\Categories\Index.cshtml" />
     <None Include="Views\Categories\_ViewStart.cshtml" />
-    <None Include="Views\Loans\Create.cshtml" />
-    <None Include="Views\Loans\Delete.cshtml" />
-    <None Include="Views\Loans\Details.cshtml" />
-    <None Include="Views\Loans\Edit.cshtml" />
-    <None Include="Views\Loans\Index.cshtml" />
-    <None Include="Views\Loans\_ViewStart.cshtml" />
-    <None Include="Views\Users\Create.cshtml" />
-    <None Include="Views\Users\Delete.cshtml" />
-    <None Include="Views\Users\Details.cshtml" />
-    <None Include="Views\Users\Edit.cshtml" />
-    <None Include="Views\Users\Index.cshtml" />
     <None Include="wwwroot\Data\Img\news.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">

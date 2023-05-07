@@ -9,6 +9,7 @@ namespace OnlineLibrary.Services.Interfaces
 
         public List<Category> GetBySearchCondition(string searchString);
 
+        public int GetNumberOfListedCategories();
         
     }
 }

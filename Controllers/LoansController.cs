@@ -21,8 +21,9 @@ namespace OnlineLibrary.Controllers
         // GET: Loans
         public async Task<IActionResult> Index()
         {
-            var onlineLibraryContext = _context.Loans.Include(l => l.User);
-            return View(await onlineLibraryContext.ToListAsync());
+              return _context.Loans != null ? 
+                          View(await _context.Loans.ToListAsync()) :
+                          Problem("Entity set 'OnlineLibraryContext.Loans'  is null.");
         }
 
         // GET: Loans/Details/5
@@ -34,7 +35,6 @@ namespace OnlineLibrary.Controllers
             }
 
             var loan = await _context.Loans
-                .Include(l => l.User)
                 .FirstOrDefaultAsync(m => m.LoanId == id);
             if (loan == null)
             {
@@ -47,7 +47,6 @@ namespace OnlineLibrary.Controllers
         // GET: Loans/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
             return View();
         }
 
@@ -65,7 +64,6 @@ namespace OnlineLibrary.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", loan.UserId);
             return View(loan);
         }
 
@@ -82,7 +80,6 @@ namespace OnlineLibrary.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", loan.UserId);
             return View(loan);
         }
 
@@ -118,7 +115,6 @@ namespace OnlineLibrary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", loan.UserId);
             return View(loan);
         }
 
@@ -131,7 +127,6 @@ namespace OnlineLibrary.Controllers
             }
 
             var loan = await _context.Loans
-                .Include(l => l.User)
                 .FirstOrDefaultAsync(m => m.LoanId == id);
             if (loan == null)
             {

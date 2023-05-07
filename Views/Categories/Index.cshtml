@@ -3,6 +3,8 @@
     ViewData["Title"] = "Index";
 
     Pager pager = ViewBag.Pager;
+    int i = 0, rownumber= 0;
+    
 }
 
 @section Scripts{
@@ -37,14 +39,12 @@
         </tr>
     </thead>
     <tbody >
-        @{
-            int i = 0;
-        }
         @foreach (var item in Model)
         {
             i++;
+            rownumber = pager.PageSize * (pager.CurrentPage - 1) + i;
             <tr>
-                <td>@Html.DisplayFor(modelItem => @i + @pager.PageSize )</td>
+                <td>@Html.DisplayFor(modelItem => rownumber )</td>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
                     @if (item.IsActive == true)
