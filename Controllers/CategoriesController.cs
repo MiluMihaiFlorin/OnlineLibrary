@@ -25,7 +25,7 @@ namespace OnlineLibrary.Controllers
         // GET: Categories
         public async Task<IActionResult> Index(string searchString = "",int pg= 1, int pageSize = 5)
         {
-            List<Category> data = _categoryService.GetAll();
+            List<Category> data = _categoryService.GetAllCategories();
             if (!String.IsNullOrEmpty(searchString))
             {
                 data = _categoryService.GetBySearchCondition(searchString);
@@ -37,21 +37,20 @@ namespace OnlineLibrary.Controllers
 
             data = data.Skip((pg - 1)*pageSize).Take(pageSize).ToList();
             
-            return _categoryService.GetAll() != null ? 
+            return _categoryService.GetAllCategories() != null ? 
                           View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Categories'  is null.");
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryService.GetCategory(id);
             if (category == null)
             {
                 return NotFound();
@@ -60,38 +59,31 @@ namespace OnlineLibrary.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
-        public IActionResult Create()
+        public IActionResult Create( Category category)
         {
-            return View();
-        }
+            category.CategoryId = Guid.NewGuid();
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Name,IsActive")] Category category)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                category.CategoryId = Guid.NewGuid();
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(category);
             }
-            return View(category);
+            if(_categoryService.CategoryExists(category.Name))
+            {
+                ModelState.AddModelError("Name", "There is already a category with this name!");
+            }
+            _categoryService.CreateCategory(category);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public IActionResult Edit(Guid id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            var category = _categoryService.GetCategory(id);
             if (category == null)
             {
                 return NotFound();
@@ -99,88 +91,30 @@ namespace OnlineLibrary.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,Name,IsActive")] Category category)
+        public IActionResult Update(Guid id, [Bind("CategoryId,Name,IsActive")] Category category)
         {
-            if (id != category.CategoryId)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
+                    _categoryService.UpdateCategory(category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.CategoryId))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public IActionResult Delete(Guid id)
         {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
-        }
-
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'OnlineLibraryContext.Categories'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
-            
-            await _context.SaveChangesAsync();
+            _categoryService.DeleteCategory(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(Guid id)
-        {
-          return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
-        }
-
-        [HttpGet]
-        public IActionResult GetCategoriesWithStatus(string statusType)
-        {
-            var categories = _categoryService.GetCategoryByType(statusType);
-            return View(categories);
-        }
     }
 }

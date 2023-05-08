@@ -13,20 +13,18 @@ using OnlineLibrary.Services.Interfaces;
 namespace OnlineLibrary.Controllers
 {
     public class AuthorsController : Controller
-    {
-        private readonly OnlineLibraryContext _context;
+    {        
         private IAuthorService _authorService;
 
-        public AuthorsController(OnlineLibraryContext context, IAuthorService authorService)
-        {
-            _context = context;
+        public AuthorsController(IAuthorService authorService)
+        {            
             _authorService = authorService;
         }
 
         // GET: Authors
         public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-            List<Author> data = _authorService.GetAll();
+            List<Author> data = _authorService.GetAllAuthors();
             if (!String.IsNullOrEmpty(searchString))
             {
                 data = _authorService.GetBySearchCondition(searchString);
@@ -36,21 +34,20 @@ namespace OnlineLibrary.Controllers
             this.ViewBag.Pager = pager;
             data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
 
-            return _authorService.GetAll() != null ?
+            return _authorService.GetAllAuthors() != null ?
                           View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Authors'  is null.");
         }
 
         // GET: Authors/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public IActionResult Details(Guid id)
         {
-            if (id == null || _context.Authors == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var author = await _context.Authors
-                .FirstOrDefaultAsync(m => m.AuthorId == id);
+            var author =  _authorService.GetAuthor(id);
             if (author == null)
             {
                 return NotFound();
@@ -59,120 +56,67 @@ namespace OnlineLibrary.Controllers
             return View(author);
         }
 
-        // GET: Authors/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Authors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AuthorId,Name")] Author author)
+        public IActionResult Create( Author author)
         {
-            if (ModelState.IsValid)
+            author.AuthorId = Guid.NewGuid();
+
+            if (!ModelState.IsValid)
             {
-                author.AuthorId = Guid.NewGuid();
-                _context.Add(author);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(author);
             }
-            return View(author);
+
+            if (_authorService.AuthorExists(author.Name))
+            {
+                ModelState.AddModelError("Name", "There is already an author with this name!");
+                return View(author);    
+            }
+            _authorService.CreateAuthor(author);
+            return RedirectToAction(nameof(Index));
+
         }
 
-        // GET: Authors/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public IActionResult Edit(Guid id)
         {
-            if (id == null || _context.Authors == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
-            var author = await _context.Authors.FindAsync(id);
+            var author = _authorService.GetAuthor(id);
             if (author == null)
             {
                 return NotFound();
             }
             return View(author);
         }
-
-        // POST: Authors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("AuthorId,Name")] Author author)
-        {
-            if (id != author.AuthorId)
-            {
-                return NotFound();
-            }
-
+        public async Task<IActionResult> Update(Guid id, [Bind("AuthorId,Name")] Author author)
+        {            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(author);
-                    await _context.SaveChangesAsync();
+                  _authorService.UpdateAuthor(author);                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AuthorExists(author.AuthorId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(author);
-        }
-
-        // GET: Authors/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null || _context.Authors == null)
+            else
             {
-                return NotFound();
-            }
-
-            var author = await _context.Authors
-                .FirstOrDefaultAsync(m => m.AuthorId == id);
-            if (author == null)
-            {
-                return NotFound();
-            }
-
-            return View(author);
-        }
-
-        // POST: Authors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.Authors == null)
-            {
-                return Problem("Entity set 'OnlineLibraryContext.Authors'  is null.");
-            }
-            var author = await _context.Authors.FindAsync(id);
-            if (author != null)
-            {
-                _context.Authors.Remove(author);
+                return View(author);
             }
             
-            await _context.SaveChangesAsync();
+        }
+
+        public IActionResult Delete(Guid id)
+        {
+            _authorService.DeleteAuthor(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AuthorExists(Guid id)
-        {
-          return (_context.Authors?.Any(e => e.AuthorId == id)).GetValueOrDefault();
-        }
     }
 }

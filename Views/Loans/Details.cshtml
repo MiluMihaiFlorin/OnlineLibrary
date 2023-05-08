@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
 
+@inject UserManager<IdentityUser> UserManager
 <h1>Details</h1>
 
 <div>
@@ -31,6 +34,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.LoanId">Edit</a> |
+        @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.LoanId">Edit</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

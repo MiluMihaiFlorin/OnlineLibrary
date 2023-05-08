@@ -38,5 +38,15 @@ namespace OnlineLibrary.Repositories
         {
             this.OnlineLibraryContext.Set<T>().Remove(entity);
         }
+
+        public T Get(Guid id)
+        {
+            return this.OnlineLibraryContext.Set<T>().Find(id);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return this.OnlineLibraryContext.Set<T>().ToList();
+        }
     }
 }

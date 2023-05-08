@@ -3,13 +3,22 @@
 namespace OnlineLibrary.Services.Interfaces
 {
     public interface ICategoryService
-    {
-        List<Models.DBEntities.Category> GetCategoryByType(string categoryType);
-        public List<Category> GetAll();
+    {        
+        public List<Category> GetAllCategories();
 
         public List<Category> GetBySearchCondition(string searchString);
+        
+        public Category GetCategory(Guid id);
 
         public int GetNumberOfListedCategories();
-        
+
+        public void UpdateCategory(Category category);
+
+        public void DeleteCategory(Guid id);
+
+        public void CreateCategory(Category category);
+
+        public bool CategoryExists(string name);
+
     }
 }

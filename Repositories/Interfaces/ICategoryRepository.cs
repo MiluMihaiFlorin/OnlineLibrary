@@ -5,5 +5,9 @@ namespace OnlineLibrary.Repositories.Interfaces
 {
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
+        public Category GetCategoryWithDetails(Guid id);
+
+        public Category GetCategoryByName(string categoryName);
+
     }
 }

@@ -29,7 +29,7 @@ namespace OnlineLibrary.Services
             return categories;
         }
 
-        public List<Category> GetAll()
+        public List<Category> GetAllCategories()
         {
             var result = _repositoryWrapper.CategoryRepository.FindAll().ToList();
             return result;
@@ -44,6 +44,55 @@ namespace OnlineLibrary.Services
         {
             var result = _repositoryWrapper.CategoryRepository.FindAll().Count();
             return result;
+        }
+
+        public Category GetCategory(Guid id)
+        {
+            return _repositoryWrapper.CategoryRepository.GetCategoryWithDetails(id);
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            var currentCategory = _repositoryWrapper.CategoryRepository.Get(category.CategoryId);
+
+            currentCategory.Name = category.Name;
+            currentCategory.IsActive = category.IsActive;
+
+            _repositoryWrapper.CategoryRepository.Update(currentCategory);
+            _repositoryWrapper.Save();
+        }
+
+        public void DeleteCategory(Guid id)
+        {
+            var category = _repositoryWrapper.CategoryRepository.Get(id);
+            if(category != null)
+            {
+                _repositoryWrapper.CategoryRepository.Delete(category);
+            }
+            _repositoryWrapper.Save();
+        }
+
+        public void CreateCategory(Category category)
+        {
+            _repositoryWrapper.CategoryRepository.Create(new Category
+            {
+                CategoryId = category.CategoryId,
+                Name = category.Name,
+                IsActive = category.IsActive,
+            });
+            _repositoryWrapper.Save();
+        }
+
+        public bool CategoryExists(string name)
+        {
+            if(_repositoryWrapper.CategoryRepository.GetCategoryByName(name) != null)
+            {
+                return true;
+            }
+            else 
+            {
+                return false; 
+            }
         }
     }
 }

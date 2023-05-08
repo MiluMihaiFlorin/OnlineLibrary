@@ -1,4 +1,5 @@
-﻿using OnlineLibrary.Models.DBEntities;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.Models.DBEntities;
 using OnlineLibrary.Repositories.Interfaces;
 
 namespace OnlineLibrary.Repositories
@@ -8,5 +9,16 @@ namespace OnlineLibrary.Repositories
         public CategoryRepository(OnlineLibraryContext? onlineLibraryContext) : base(onlineLibraryContext)
         {
         }
+
+        public Category GetCategoryWithDetails(Guid id)
+        {
+            return OnlineLibraryContext.Categories.Where(x => x.CategoryId.Equals(id)).Include(x => x.Books).FirstOrDefault();
+        }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            return OnlineLibraryContext.Categories.FirstOrDefault(g => g.Name == categoryName);
+        }
+
     }
 }

@@ -6,16 +6,31 @@
     int i = 0, rownumber= 0;
     
 }
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
 
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @section Scripts{
     <script type="text/javascript">
 
     </script>
 }
+@if (User.IsInRole("Admin"))
+{
 
-<h1 style="padding:30px; color:dimgray">
-    Manage Categories
-</h1>
+    <h1 style="padding:30px; color:dimgray">
+            Manage Categories        
+    </h1>
+}
+else
+{
+    <h1 style="padding:30px; color:dimgray">
+        View Categories
+    </h1>
+
+}
+
 <div class="d-flex justify-content-start">
         <form asp-action="index">
             <span class="btn-group">
@@ -59,8 +74,11 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-primary fa fa-circle-info" type="button"></a>
-                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-success fa fa-pencil-square" type="button" ></a>
-                    <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                    }
                 </td>
             </tr>
         }
@@ -68,10 +86,15 @@
     <tfoot>
     </tfoot>
 </table>
-<nav>
-    <div class="row">
-        <div class="col-12">
-            <partial name="_paginationBar" model="@pager" />
-        </div>
+<footer class="footer">
+    <div class="container">
+        <nav>
+            <div class="row">
+                <div class="col-12">
+                    <partial name="_paginationBar" model="@pager" />
+                </div>
+            </div>
+        </nav>
     </div>
-</nav>
+</footer>
+

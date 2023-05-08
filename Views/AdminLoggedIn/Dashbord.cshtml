@@ -8,47 +8,52 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col-sm">
-                <div class="card text-center mb-3" style="max-width: 18rem; height: 12rem">
+                <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-book fa-4x" style="color:forestgreen"></i></div>
                     <div class="card-body">
                         <h5 class="card-title" style="color:forestgreen">@nrOfListedBooks</h5>
-                        <p class="card-text" style="color:forestgreen">Books listed</p>
+                        <p class="card-text" style="color:forestgreen">Books listed</p> 
+                        <a asp-controller="Books" asp-action="Index" class="btn btn-outline-light" style="background-color: forestgreen !important">View Books</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
-                <div class="card text-center mb-3" style="max-width: 18rem; height: 12rem">
+                <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-recycle fa-4x" style="color:saddlebrown"></i></div>
                     <div class="card-body">
                         <h5 class="card-title" style="color:saddlebrown">10</h5>
                         <p class="card-text" style="color:saddlebrown"> Books Not Returned Yet</p>
+                        <a asp-controller="Loans" asp-action="Index" class="btn btn-outline-light" style="background-color: saddlebrown !important">View Loans</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
-                <div class="card text-center mb-3" style="max-width: 18rem; height: 12rem">
+                <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-users fa-4x" style="color:red"></i></div>
                     <div class="card-body">
                         <h5 class="card-title" style="color:red">5</h5>
                         <p class="card-text" style="color:red">Registered Users</p>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light" style="background-color: red !important">View Users</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
-                <div class="card text-center mb-3" style="max-width: 18rem; height: 12rem">
+                <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-user fa-4x " style="color:orchid"></i></div>
                     <div class="card-body">
                         <h5 class="card-title" style="color:orchid">@nrOfListedAuthors</h5>
                         <p class="card-text" style="color:orchid">Authors Listed</p>
+                        <a asp-controller="Authors" asp-action="Index" class="btn btn-outline-light" style="background-color: orchid !important">View Authors</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
-                <div class="card text-center mb-3" style="max-width: 18rem; height: 12rem">
+                <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-list fa-4x " style="color:darkblue"></i></div>
                     <div class="card-body">
                         <h5 class="card-title" style="color:darkblue">@nrOfListedCategories</h5>
                         <p class="card-text" style="color:darkblue">Listed Categories</p>
+                        <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-light" style="background-color: darkblue !important">View Categories</a>
                     </div>
                 </div>
             </div>

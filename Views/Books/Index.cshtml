@@ -5,10 +5,26 @@
     Pager pager = ViewBag.Pager;
     int i = 0, rownumber = 0;
 }
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
 
-<h1 style="padding:30px; color:dimgray">
-    Manage Books
-</h1>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (User.IsInRole("Admin"))
+{
+
+    <h1 style="padding:30px; color:dimgray">
+        Manage Authors
+    </h1>
+}
+else
+{
+    <h1 style="padding:30px; color:dimgray">
+        View Authors
+    </h1>
+
+}
 <div class="d-flex justify-content-start">
     <form asp-action="index">
         <span class="btn-group">
@@ -47,8 +63,11 @@
                 <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-primary fa fa-circle-info" type="button"></a>
-                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-success fa fa-pencil-square" type="button"></a>
-                    <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                        <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                    }
                 </td>
             </tr>
         }

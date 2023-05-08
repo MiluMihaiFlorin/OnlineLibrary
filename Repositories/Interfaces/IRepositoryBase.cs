@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace OnlineLibrary.Repositories.Interfaces
 {
@@ -9,5 +10,12 @@ namespace OnlineLibrary.Repositories.Interfaces
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
+
+        public T Get(Guid id);
+
+
+        public IEnumerable<T> GetAll();
+        
+
     }
 }
