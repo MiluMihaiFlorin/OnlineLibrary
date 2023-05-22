@@ -11,20 +11,20 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Areas.Identity.Data;
 
 namespace OnlineLibrary.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        //private readonly IEmailSender _sender;
+        private readonly UserManager<OnlineLibraryUser> _userManager;
+        private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager)
+        public RegisterConfirmationModel(UserManager<OnlineLibraryUser> userManager, IEmailSender sender)
         {
             _userManager = userManager;
-            //_sender = sender;
+            _sender = sender;
         }
 
         /// <summary>

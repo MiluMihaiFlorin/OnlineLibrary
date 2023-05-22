@@ -2,46 +2,85 @@
 
 @{
     ViewData["Title"] = "Index";
+    Pager pager = ViewBag.Pager;
+    int i = 0, rownumber = 0;
 }
+@using Microsoft.AspNetCore.Identity
+@using OnlineLibrary.Models.DBEntities
+@using OnlineLibrary.Areas.Identity.Data
 
-<h1>Index</h1>
+@inject SignInManager<OnlineLibraryUser> SignInManager
+@inject UserManager<OnlineLibraryUser> UserManager
+@if (User.IsInRole("Admin"))
+{
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    <h1 style="padding:30px; color:dimgray">
+        Manage Loans
+    </h1>
+}
+else
+{
+    <h1 style="padding:30px; color:dimgray">
+        View Loans
+    </h1>
+
+}
+<div class="d-flex justify-content-start">
+    <form asp-action="index">
+        <span class="btn-group">
+            <input class="form-control" type="text"
+                   name="searchString"
+                   value="@ViewBag.searchString"
+                   placeholder="Search Key" />
+            <input class="p-1 ml-2 btn btn-sm btn-primary" style="border-radius:10px;" type="submit" value="Search" />
+        </span>
+    </form>
+</div>
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoanDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            <th></th>
+
+            <th scope="col">#</th>
+            <th scope="col">Loan Date</th>
+            <th scope="col">Return Date</th>
+            <th scope="col">Book</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th scope="col">User</th>                
+            }            
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoanDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.LoanId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.LoanId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.LoanId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            i++;
+            rownumber = pager.PageSize * (pager.CurrentPage - 1) + i;
+            <tr>
+                <th scope="row">@Html.DisplayFor(modelItem => rownumber)</th>
+                <td>@Html.DisplayFor(modelItem => item.LoanDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReturnDate)</td>                
+                <td>@Html.DisplayFor(modelItem => item.Books)</td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.LoanId" class="btn btn-primary fa fa-circle-info" type="button"></a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.LoanId" class="btn btn-success fa fa-pencil-square" type="button"></a>
+                        <a asp-action="Delete" asp-route-id="@item.LoanId" class="btn btn-danger fa fa-trash-alt" type="button"></a>
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
+    <tfoot>
+    </tfoot>
 </table>
+<nav>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_paginationBar" model="@pager" />
+        </div>
+    </div>
+</nav>

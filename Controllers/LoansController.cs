@@ -5,26 +5,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.Data;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Controllers
 {
     public class LoansController : Controller
     {
         private readonly OnlineLibraryContext _context;
+        private ILoanService _loanService;
 
-        public LoansController(OnlineLibraryContext context)
+        public LoansController(OnlineLibraryContext context, ILoanService loanService)
         {
             _context = context;
+            _loanService = loanService;
         }
 
         // GET: Loans
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-              return _context.Loans != null ? 
-                          View(await _context.Loans.ToListAsync()) :
+            List<Loan> data = _loanService.GetAllLoans();
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    data = _loanService.GetBySearchCondition(searchString);
+            //}
+
+            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
+            this.ViewBag.Pager = pager;
+            data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
+
+            return _loanService.GetAllLoans() != null ?
+                          View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Loans'  is null.");
         }
+
 
         // GET: Loans/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -55,7 +70,7 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LoanId,UserId,LoanDate,ReturnDate")] Loan loan)
+        public async Task<IActionResult> Create([Bind("LoanId,LoanDate,ReturnDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +103,7 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("LoanId,UserId,LoanDate,ReturnDate")] Loan loan)
+        public async Task<IActionResult> Edit(Guid id, [Bind("LoanId,LoanDate,ReturnDate")] Loan loan)
         {
             if (id != loan.LoanId)
             {

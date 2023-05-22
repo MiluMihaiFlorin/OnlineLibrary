@@ -1,5 +1,7 @@
 ﻿using OnlineLibrary.Models.DBEntities;
 using OnlineLibrary.Repositories.Interfaces;
+using OnlineLibrary.Areas.Identity.Data;
+using OnlineLibrary.Data;
 
 namespace OnlineLibrary.Repositories
 {
@@ -9,6 +11,7 @@ namespace OnlineLibrary.Repositories
         private ICategoryRepository? _CategoryRepository;
         private IAuthorRepository? _AuthorRepository;
         private IBookRepository? _BookRepository;
+        private ILoanRepository? _LoanRepository;
 
         public ICategoryRepository CategoryRepository 
         {
@@ -52,6 +55,19 @@ namespace OnlineLibrary.Repositories
 
         }
 
+        public ILoanRepository LoanRepository
+        {
+            get
+            {
+                if (_LoanRepository == null)
+                {
+                    _LoanRepository = new LoanRepository(_OnlineLibraryContext);
+                }
+
+                return _LoanRepository;
+            }
+
+        }
 
         public RepositoryWrapper(OnlineLibraryContext onlineLibraryContext)
         {

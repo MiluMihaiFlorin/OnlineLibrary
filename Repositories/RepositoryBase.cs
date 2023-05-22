@@ -2,12 +2,14 @@
 using OnlineLibrary.Models.DBEntities;
 using OnlineLibrary.Repositories.Interfaces;
 using System.Linq.Expressions;
+using OnlineLibrary.Areas.Identity.Data;
+using OnlineLibrary.Data;
 
 namespace OnlineLibrary.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected Models.DBEntities.OnlineLibraryContext OnlineLibraryContext { get; set; }
+        protected OnlineLibraryContext OnlineLibraryContext { get; set; }
 
         public RepositoryBase(OnlineLibraryContext? onlineLibraryContext)
         {

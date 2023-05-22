@@ -13,11 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="LoanDate" class="control-label"></label>
                 <input asp-for="LoanDate" class="form-control" />
                 <span asp-validation-for="LoanDate" class="text-danger"></span>
@@ -27,6 +22,33 @@
                 <input asp-for="ReturnDate" class="form-control" />
                 <span asp-validation-for="ReturnDate" class="text-danger"></span>
             </div>
+            <div class="form-floating mb-3">
+                @if (ViewData.ContainsKey("Book") && (ViewData["Book"] as SelectList).Any())
+                {
+                    <select asp-for="Books" asp-items="@ViewBag.Book" class="form-select"></select>
+                }
+                else
+                {
+
+                    <input asp-for="Books" type="text" value="No books available" class="form-control" readonly />
+                    <label asp-for="Books">Book</label>
+
+                }
+            </div>
+            <div class="form-floating mb-3">
+                @if (ViewData.ContainsKey("User") && (ViewData["User"] as SelectList).Any())
+                {
+                    <select asp-for="Users" asp-items="@ViewBag.User" class="form-select"></select>
+                }
+                else
+                {
+
+                    <input asp-for="Users" type="text" value="No users available" class="form-control" readonly />
+                    <label asp-for="Users">User</label>
+
+                }
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

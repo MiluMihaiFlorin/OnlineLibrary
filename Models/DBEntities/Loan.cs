@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnlineLibrary.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineLibrary.Models.DBEntities
 {
@@ -6,7 +7,7 @@ namespace OnlineLibrary.Models.DBEntities
     {
         public Guid LoanId { get; set; }
 
-        public Guid UserId { get; set; }
+        public ICollection<OnlineLibraryUser>? Users { get; set; }
         
 
         [Required]

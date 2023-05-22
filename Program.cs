@@ -5,13 +5,15 @@ using OnlineLibrary.Repositories.Interfaces;
 using OnlineLibrary.Services;
 using OnlineLibrary.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using OnlineLibrary.Data;
+using OnlineLibrary.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<OnlineLibraryUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<OnlineLibraryContext>();
 builder.Services.AddDbContext<OnlineLibraryContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OnlineLibraryDb")));
 
@@ -22,6 +24,9 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<ILoanService, LoanService>();
+
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -87,16 +92,16 @@ using (var scope = app.Services.CreateScope())
 
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<OnlineLibraryUser>>();
     string email = "admin@admin.com";
     string password = "Admin123456!";
 
     if (await userManager.FindByEmailAsync(email) == null)
     {
-        var adminUser = new IdentityUser
+        var adminUser = new OnlineLibraryUser
         {
             UserName = email,
-            Email = email
+            Email = email,
         };
         await userManager.CreateAsync(adminUser, password);
 

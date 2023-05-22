@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Models.DBEntities;
 using OnlineLibrary.Services.Interfaces;
+using OnlineLibrary.Areas.Identity.Data;
+using OnlineLibrary.Data;
 
 namespace OnlineLibrary.Controllers
 {

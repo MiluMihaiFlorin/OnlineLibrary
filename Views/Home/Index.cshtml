@@ -4,9 +4,10 @@
 }
 @using Microsoft.AspNetCore.Identity
 @using OnlineLibrary.Models.DBEntities
+@using OnlineLibrary.Areas.Identity.Data
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<OnlineLibraryUser> SignInManager
+@inject UserManager<OnlineLibraryUser> UserManager
 <head>
     
 </head>
