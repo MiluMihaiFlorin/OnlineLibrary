@@ -8,5 +8,7 @@ namespace OnlineLibrary.Repositories.Interfaces
         public List<Book> GetBooksForLoan(Guid loanId);
 
         public List<Loan> GetAllLoans();
+
+        public List<Loan> GetLoansForUser(OnlineLibraryUser user);
     }
 }

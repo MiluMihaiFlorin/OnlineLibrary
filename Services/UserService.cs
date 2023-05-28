@@ -51,7 +51,7 @@ namespace OnlineLibrary.Services
 
         public string GetUserRole(OnlineLibraryUser user)
         {
-            IList<string> role = (IList<string>)_userManager.GetRolesAsync(user).Result;
+            IList<string> role = _userManager.GetRolesAsync(user).Result;
             string mainrole = role.First();
 
             return mainrole;

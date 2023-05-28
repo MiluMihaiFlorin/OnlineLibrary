@@ -23,6 +23,13 @@ namespace OnlineLibrary.Repositories
             return OnlineLibraryContext.Loans.Include(l => l.Users).Include(l => l.Books).ToList();
 
         }
+
+        public List<Loan> GetLoansForUser(OnlineLibraryUser user)
+        {
+            return OnlineLibraryContext.Loans.Include(loan => loan.Users).Include(loan => loan.Books).Where(loan => loan.Users.Any(_user => _user.Id == user.Id)).ToList();
+        }
     }
+
+
     
 }

@@ -6,7 +6,7 @@ namespace OnlineLibrary.Services.Interfaces
 {
     public interface ILoanService
     {
-        public List<Loan> GetAllLoans();
+        public List<Loan> GetAllLoans(OnlineLibraryUser user);
 
         public Task AddNewLoan(Loan loan, List<string> userIds, List<Guid> bookIds);
 

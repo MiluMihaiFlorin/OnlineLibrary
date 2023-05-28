@@ -36,7 +36,8 @@ namespace OnlineLibrary.Controllers
         // GET: Loans
         public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-            var data = _loanService.GetAllLoans();
+            var user = _userManeger.GetUserAsync(User).Result;
+            var data = _loanService.GetAllLoans(user);
             if (!String.IsNullOrEmpty(searchString))
             {
                 data = _loanService.GetBySearchCondition(searchString);
@@ -52,7 +53,7 @@ namespace OnlineLibrary.Controllers
             //    data = _loanService.GetBySearchCondition(searchString);
             //}
 
-            return _loanService.GetAllLoans() != null ?
+            return _loanService.GetAllLoans(user) != null ?
                           View(data) :
                           Problem("Entity set 'OnlineLibraryContext.Loans'  is null.");
         }

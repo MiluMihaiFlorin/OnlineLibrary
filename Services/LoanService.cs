@@ -55,9 +55,18 @@ namespace OnlineLibrary.Services
 
 
 
-        public List<Loan> GetAllLoans()
+        public List<Loan> GetAllLoans(OnlineLibraryUser  user)
         {
-            var result = _repositoryWrapper.LoanRepository.GetAllLoans();
+            var result =  new List<Loan>();
+
+            if(_userService.GetUserRole(user) == "Admin")
+            {
+                result = _repositoryWrapper.LoanRepository.GetAllLoans();
+            }
+            else
+            {
+                result = _repositoryWrapper.LoanRepository.GetLoansForUser(user).ToList();
+            }
             return result;
         }        
 
