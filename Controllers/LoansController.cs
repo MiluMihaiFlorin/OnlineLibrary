@@ -79,11 +79,15 @@ namespace OnlineLibrary.Controllers
 
 
         // GET: Loans/Create
-        public IActionResult Create()
+        public async Task<ActionResult> Create()
         {
             List<SelectListItem> usersSelectListItems = new List<SelectListItem>();
             foreach (OnlineLibraryUser user in _userManeger.Users.ToList())
             {
+                Task<bool> role = _userManeger.IsInRoleAsync(user, "Admin");
+                if (await role){
+                    continue;
+                }
                 SelectListItem selectList = new SelectListItem()
                 {
                     Text = user.FirstName + " " + user.LastName,   
