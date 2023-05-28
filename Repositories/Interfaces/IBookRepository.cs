@@ -5,5 +5,6 @@ namespace OnlineLibrary.Repositories.Interfaces
 {
     public interface IBookRepository : IRepositoryBase<Book>
     {
+        public Task<List<Book>> GetBooks();
     }
 }

@@ -9,6 +9,10 @@
         IBookRepository BookRepository { get; }
 
         ILoanRepository LoanRepository { get; }
+
+        IUserRepository UserRepository { get; }
         void Save();
+
+        public Task SaveA();
     }
 }

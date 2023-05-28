@@ -3,6 +3,8 @@
     var nrOfListedCategories = ViewData["nrOfListedCategories"];
     var nrOfListedAuthors = ViewData["nrOfListedAuthors"];
     var nrOfListedBooks = ViewData["nrOfListedBooks"];
+    var nrOfUsers = ViewData["nrOfUsers"];
+    var nrOfLoans = ViewData["nrOfLoans"];
 }
 <div>
     <div class="container">
@@ -21,7 +23,7 @@
                 <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-recycle fa-4x" style="color:saddlebrown"></i></div>
                     <div class="card-body">
-                        <h5 class="card-title" style="color:saddlebrown">10</h5>
+                        <h5 class="card-title" style="color:saddlebrown">@nrOfLoans</h5>
                         <p class="card-text" style="color:saddlebrown"> Books Not Returned Yet</p>
                         <a asp-controller="Loans" asp-action="Index" class="btn btn-outline-light" style="background-color: saddlebrown !important">View Loans</a>
                     </div>
@@ -31,7 +33,7 @@
                 <div class="card text-center mb-3" style="max-width: 18rem; height: 15rem">
                     <div class="card-header"><i class="fa fa-users fa-4x" style="color:red"></i></div>
                     <div class="card-body">
-                        <h5 class="card-title" style="color:red">5</h5>
+                        <h5 class="card-title" style="color:red">@nrOfUsers</h5>
                         <p class="card-text" style="color:red">Registered Users</p>
                         <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light" style="background-color: red !important">View Users</a>
                     </div>

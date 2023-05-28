@@ -7,15 +7,18 @@ namespace OnlineLibrary.Models.DBEntities
     {
         public Guid LoanId { get; set; }
 
-        public ICollection<OnlineLibraryUser>? Users { get; set; }
-        
+
+                
 
         [Required]
         public DateTime LoanDate { get; set; }
 
         public DateTime? ReturnDate { get; set; }
 
+        public ICollection<OnlineLibraryUser>? Users { get; set; }
+        
         public ICollection<Book>? Books{ get; set; }
         
+
     }
 }

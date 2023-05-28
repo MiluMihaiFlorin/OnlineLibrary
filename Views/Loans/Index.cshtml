@@ -4,7 +4,9 @@
     ViewData["Title"] = "Index";
     Pager pager = ViewBag.Pager;
     int i = 0, rownumber = 0;
+
 }
+
 @using Microsoft.AspNetCore.Identity
 @using OnlineLibrary.Models.DBEntities
 @using OnlineLibrary.Areas.Identity.Data
@@ -39,7 +41,6 @@ else
 <table class="table table-striped">
     <thead>
         <tr>
-
             <th scope="col">#</th>
             <th scope="col">Loan Date</th>
             <th scope="col">Return Date</th>
@@ -57,10 +58,25 @@ else
             i++;
             rownumber = pager.PageSize * (pager.CurrentPage - 1) + i;
             <tr>
-                <th scope="row">@Html.DisplayFor(modelItem => rownumber)</th>
-                <td>@Html.DisplayFor(modelItem => item.LoanDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.ReturnDate)</td>                
-                <td>@Html.DisplayFor(modelItem => item.Books)</td>
+                <td>@Html.DisplayFor(modelItem => rownumber )</td>
+                <td>@item.LoanDate</td>
+                <td>@item.ReturnDate</td>
+                <td>
+                    <ul>
+                        @foreach (var book in item.Books)
+                        {
+                            <li>@book.Title</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var user in item.Users)
+                        {
+                            <li>@user.FirstName @user.LastName</li>
+                        }
+                    </ul>
+                </td>
 
                 <td>
                     <a asp-action="Details" asp-route-id="@item.LoanId" class="btn btn-primary fa fa-circle-info" type="button"></a>
@@ -77,10 +93,14 @@ else
     <tfoot>
     </tfoot>
 </table>
-<nav>
-    <div class="row">
-        <div class="col-12">
-            <partial name="_paginationBar" model="@pager" />
-        </div>
+<footer class="footer">
+    <div class="container">
+        <nav>
+            <div class="row">
+                <div class="col-12">
+                    <partial name="_paginationBar" model="@pager" />
+                </div>
+            </div>
+        </nav>
     </div>
-</nav>
+</footer>

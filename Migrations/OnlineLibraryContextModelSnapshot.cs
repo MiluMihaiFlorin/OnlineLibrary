@@ -34,7 +34,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasIndex("BooksBookId");
 
-                    b.ToTable("AuthorBook");
+                    b.ToTable("AuthorBook", (string)null);
                 });
 
             modelBuilder.Entity("BookCategory", b =>
@@ -49,7 +49,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasIndex("CategoriesCategoryId");
 
-                    b.ToTable("BookCategory");
+                    b.ToTable("BookCategory", (string)null);
                 });
 
             modelBuilder.Entity("BookLoan", b =>
@@ -64,7 +64,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasIndex("LoansLoanId");
 
-                    b.ToTable("BookLoan");
+                    b.ToTable("BookLoan", (string)null);
                 });
 
             modelBuilder.Entity("LoanOnlineLibraryUser", b =>
@@ -79,7 +79,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("LoanOnlineLibraryUser");
+                    b.ToTable("LoanOnlineLibraryUser", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -238,6 +238,12 @@ namespace OnlineLibrary.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -296,7 +302,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Book", b =>
@@ -326,7 +332,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("BookId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Category", b =>
@@ -344,7 +350,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("OnlineLibrary.Models.DBEntities.Loan", b =>
@@ -361,7 +367,7 @@ namespace OnlineLibrary.Migrations
 
                     b.HasKey("LoanId");
 
-                    b.ToTable("Loans");
+                    b.ToTable("Loans", (string)null);
                 });
 
             modelBuilder.Entity("AuthorBook", b =>

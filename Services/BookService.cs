@@ -16,6 +16,16 @@ namespace OnlineLibrary.Services
 
         }
 
+        public Task<List<Book>> GetAllBooks() 
+        {
+            return _repositoryWrapper.BookRepository.GetBooks();
+        }
+
+        public Book GetBookById(Guid bookId)
+        {
+            return _repositoryWrapper.BookRepository.Get(bookId);
+;        }
+
         public List<Book> GetBookByTitle(string bookTitle)
         {
             throw new NotImplementedException();

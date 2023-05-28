@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.Areas.Identity.Data;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models.DBEntities;
+using OnlineLibrary.Models.ModelViews;
+using OnlineLibrary.Services;
 using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Controllers
@@ -15,25 +20,37 @@ namespace OnlineLibrary.Controllers
     {
         private readonly OnlineLibraryContext _context;
         private ILoanService _loanService;
+        private IBookService _bookService;
+        private IUserService _userService;
+        private UserManager<OnlineLibraryUser> _userManeger;
 
-        public LoansController(OnlineLibraryContext context, ILoanService loanService)
+        public LoansController(OnlineLibraryContext context, ILoanService loanService, IBookService bookService, UserManager<OnlineLibraryUser> userManager, IUserService userService)
         {
             _context = context;
             _loanService = loanService;
+            _bookService = bookService;
+            _userManeger = userManager;
+            _userService = userService;
         }
 
         // GET: Loans
         public async Task<IActionResult> Index(string searchString = "", int pg = 1, int pageSize = 5)
         {
-            List<Loan> data = _loanService.GetAllLoans();
+            var data = _loanService.GetAllLoans();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = _loanService.GetBySearchCondition(searchString);
+            }            
+            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
+
+            this.ViewBag.Pager = pager;
+
+            data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
+
             //if (!String.IsNullOrEmpty(searchString))
             //{
             //    data = _loanService.GetBySearchCondition(searchString);
             //}
-
-            var pager = new Models.DBEntities.Pager(data.Count, pg, pageSize);
-            this.ViewBag.Pager = pager;
-            data = data.Skip((pg - 1) * pageSize).Take(pageSize).ToList();
 
             return _loanService.GetAllLoans() != null ?
                           View(data) :
@@ -59,10 +76,39 @@ namespace OnlineLibrary.Controllers
             return View(loan);
         }
 
+
         // GET: Loans/Create
         public IActionResult Create()
         {
-            return View();
+            List<SelectListItem> usersSelectListItems = new List<SelectListItem>();
+            foreach (OnlineLibraryUser user in _userManeger.Users.ToList())
+            {
+                SelectListItem selectList = new SelectListItem()
+                {
+                    Text = user.FirstName + " " + user.LastName,   
+                    Value = user.Id,
+                    Selected = false
+                };
+                usersSelectListItems.Add(selectList);
+            }
+            List<SelectListItem> booksSelectListItems = new List<SelectListItem>();
+            foreach (Book book in _bookService.GetAll())
+            {
+                SelectListItem selectList = new SelectListItem()
+                {
+                    Text = book.Title,
+                    Value = book.BookId.ToString(),
+                    Selected = false
+                };
+                booksSelectListItems.Add(selectList);
+            }            
+            LoansViewModel viewModel = new LoansViewModel()
+            {
+                Users = usersSelectListItems,
+                Books = booksSelectListItems,                
+            };
+
+            return View(viewModel);
         }
 
         // POST: Loans/Create
@@ -70,16 +116,18 @@ namespace OnlineLibrary.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LoanId,LoanDate,ReturnDate")] Loan loan)
+        public async Task<IActionResult> Save( LoansViewModel loanViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                loan.LoanId = Guid.NewGuid();
-                _context.Add(loan);
-                await _context.SaveChangesAsync();
+                await _loanService.AddNewLoan(new Loan {
+                      LoanDate = loanViewModel.LoanDate
+                    , ReturnDate = loanViewModel.ReturnDate
+                    , Books = new List<Book>()
+                    , Users = new List<OnlineLibraryUser>() 
+                }
+                , (List<string>)loanViewModel.SelectedUsers
+                , (List<Guid>)loanViewModel.SelectedBooks);
                 return RedirectToAction(nameof(Index));
-            }
-            return View(loan);
+            
         }
 
         // GET: Loans/Edit/5

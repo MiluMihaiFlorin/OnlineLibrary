@@ -26,6 +26,9 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
@@ -72,7 +75,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -109,5 +111,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.MapRazorPages();
 
 app.Run();

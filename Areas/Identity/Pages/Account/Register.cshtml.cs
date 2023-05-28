@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using OnlineLibrary.Areas.Identity.Data;
+using OnlineLibrary.Services.Interfaces;
 
 namespace OnlineLibrary.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace OnlineLibrary.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<OnlineLibraryUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUserService _userService;
 
         public RegisterModel(
             UserManager<OnlineLibraryUser> userManager,
             IUserStore<OnlineLibraryUser> userStore,
             SignInManager<OnlineLibraryUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserService userService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace OnlineLibrary.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userService = userService;
         }
 
         /// <summary>
@@ -71,6 +75,19 @@ namespace OnlineLibrary.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
+            [Required(ErrorMessage = "Please enter your First Name")]
+            [StringLength(30)]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required(ErrorMessage = "Please enter your First Name")]
+            [StringLength(30)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -121,6 +138,9 @@ namespace OnlineLibrary.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    await _userService.SetFirstNameAsync(user, Input.FirstName);
+                    await _userService.SetLastNameAsync(user, Input.LastName);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

@@ -14,12 +14,12 @@ namespace OnlineLibrary.Areas.Identity.Data;
 public class OnlineLibraryUser : IdentityUser
 {
 
+    public string? FirstName { get; set; }
+
+    public string? LastName { get; set; }   
+
     public ICollection<Loan>? Loans { get; set; }
 
-    public OnlineLibraryUser()
-    {
-        Loans = new List<Loan>();
-    }
 
 }
 

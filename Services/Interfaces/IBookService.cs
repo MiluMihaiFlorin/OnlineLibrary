@@ -11,5 +11,9 @@ namespace OnlineLibrary.Services.Interfaces
 
         public int GetNumberOfListedBooks();
 
+        public Task<List<Book>> GetAllBooks();
+
+        public Book GetBookById(Guid bookId);
+
     }
 }

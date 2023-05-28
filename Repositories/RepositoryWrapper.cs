@@ -12,6 +12,7 @@ namespace OnlineLibrary.Repositories
         private IAuthorRepository? _AuthorRepository;
         private IBookRepository? _BookRepository;
         private ILoanRepository? _LoanRepository;
+        private IUserRepository? _UserRepository;
 
         public ICategoryRepository CategoryRepository 
         {
@@ -69,6 +70,21 @@ namespace OnlineLibrary.Repositories
 
         }
 
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if (_UserRepository == null)
+                {
+                    _UserRepository = new UserRepository(_OnlineLibraryContext);
+                }
+
+                return _UserRepository;
+            }
+
+        }
+
+
         public RepositoryWrapper(OnlineLibraryContext onlineLibraryContext)
         {
             _OnlineLibraryContext = onlineLibraryContext;
@@ -78,6 +94,11 @@ namespace OnlineLibrary.Repositories
         {
             _OnlineLibraryContext.SaveChanges();
         }
-        
+
+        public Task SaveA()
+        {
+            return _OnlineLibraryContext.SaveChangesAsync();
+        }
+
     }
 }
